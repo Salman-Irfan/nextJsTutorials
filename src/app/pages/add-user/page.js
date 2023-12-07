@@ -28,6 +28,18 @@ const page = () => {
             console.log(error)
         }
     }
+    const handlePutApiCall = async (e) => {
+        e.preventDefault()
+        const userFormData = {
+            name, email, password
+        }
+        try {
+            const response = await axios.put(`http://localhost:3000/api/v1/put-request/1`, userFormData)
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return (
         <>
             <div className="container text-center mt-32 bg-blue-300">
@@ -64,6 +76,8 @@ const page = () => {
                     />
                     <br />
                     <button className='bg-green-900 px-8 py-2' type="submit">Add User</button>
+                    <br />
+                    <button className='bg-green-900 px-8 py-2' type="button" onClick={handlePutApiCall}>Update User</button>
                 </form>
             </div>
         </>
