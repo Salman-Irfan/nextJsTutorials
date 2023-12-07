@@ -1,8 +1,8 @@
 import { usersData } from "@/utils/dbDummyData";
 import { NextResponse } from "next/server";
 
-export async function GET(request, id) {
-    const userId = parseInt(id.params.id, 10); // Parse the ID to ensure it's a number
+export async function GET(request, content) {
+    const userId = parseInt(content.params.id, 10); // Parse the ID to ensure it's a number
     const dynamicUserData = usersData.find(user => user.id === userId);
 
     if (!dynamicUserData) {
