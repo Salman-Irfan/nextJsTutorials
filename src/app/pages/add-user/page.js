@@ -87,11 +87,11 @@ const page = () => {
                         style={{ color: 'blue' }} // Set the text color to blue
                     />
                     <br />
-                    <button className='bg-green-900 px-8 py-2' type="submit">Add User</button>
+                    <button className='bg-green-900 px-8 py-2 rounded' type="submit">Add User</button>
                     <br />
-                    <button className='bg-green-900 px-8 py-2 my-2' type="button" onClick={handlePutApiCall}>Update User</button>
+                    <button className='bg-blue-900 px-8 py-2 my-2 rounded' type="button" onClick={handlePutApiCall}>Update User</button>
                     <br />
-                    <button className='bg-green-900 px-8 py-2 my-2' type="button" onClick={handleDeleteApiCall}>Delete User</button>
+                    <button className='bg-red-700 px-8 py-2 my-2 rounded' type="button" onClick={handleDeleteApiCall}>Delete User</button>
                 </form>
             </div>
         </>
