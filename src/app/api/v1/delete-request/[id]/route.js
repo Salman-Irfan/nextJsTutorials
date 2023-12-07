@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 
 export async function DELETE(request, content) {
-    let payload = await request.json();
+    let id = content.params.id
     return NextResponse.json({
         success: true,
         message: `delete request called with ${request.method}`,
-        payload: payload
+        id: id
     })
 
     return NextResponse.json(dynamicUserData);
