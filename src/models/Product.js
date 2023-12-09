@@ -13,17 +13,18 @@ const productSchema = new Schema({
         required: true,
     },
     company: {
-        type: Array,
-        default: ["general"]
+        type: String,
+        required: true,
     },
     color: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        type: String,
+        required: true,
     },
     category: {
-        type: Date,
-        default: Date.now,
+        type: String,
+        required: true,
     },
+    
 });
 
 const Product = mongoose.models.products || mongoose.model("products", productSchema);

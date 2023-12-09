@@ -17,3 +17,23 @@ export async function GET(request) {
         return NextResponse.json(error);
     }
 }
+
+// post request
+export async function POST(request) {
+    const payload = await request.json();
+    try {
+        await connectToMongodb();
+        let product = new Product(payload);
+        const result = await product.save();
+        return NextResponse.json({
+            success: true,
+            data: result
+        });
+    } catch (error) {
+        console.log(error.message);
+        return NextResponse.json({
+            success: false,
+            error: error.message
+        });
+    }
+}
