@@ -1,12 +1,30 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-const page = () => {
+const page = (props) => {
     const [name, setName] = useState("")
     const [price, setPrice] = useState("")
     const [company, setCompany] = useState("")
     const [color, setColor] = useState("")
     const [category, setCategory] = useState("")
+    let productId = props.params.productId
+
+    useEffect(() => {
+        getProductDetails()
+    }, [])
+
+    // api call to get product by id
+    const getProductDetails = async () => {
+        let result = await axios.get(`http://localhost:3000/api/v1/products/${productId}`)
+        console.log(result)
+        if (result.status === 200) {
+            setName(result.data.data.name)
+            setPrice(result.data.data.price)
+            setCompany(result.data.data.company)
+            setColor(result.data.data.color)
+            setCategory(result.data.data.category)
+        }
+    }
 
     const handleNameChange = (e) => {
         setName(e.target.value)
@@ -24,47 +42,25 @@ const page = () => {
         setCategory(e.target.value)
     }
 
-    const handleAddProduct = async (e) => {
+
+    const handleUpdateProduct = async (e) => {
         e.preventDefault()
-        const productFormData = {
+        const userFormData = {
             name, price, company, color, category
         }
         try {
-            const response = await axios.post(`http://localhost:3000/api/v1/products`, productFormData)
+            const response = await axios.put(`http://localhost:3000/api/v1/products/${productId}`, userFormData)
             console.log(response)
         } catch (error) {
             console.log(error)
         }
     }
-    const handlePutApiCall = async (e) => {
-        e.preventDefault()
-        const userFormData = {
-            name, email, password
-        }
-        try {
-            const response = await axios.put(`http://localhost:3000/api/v1/put-request/1`, userFormData)
-            console.log(response)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    const handleDeleteApiCall = async (e) => {
-        e.preventDefault()
-        const userFormData = {
-            name, email, password
-        }
-        try {
-            const response = await axios.delete(`http://localhost:3000/api/v1/delete-request/1`, userFormData)
-            console.log(response)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+
     return (
         <>
             <div className="container text-center mt-32 bg-blue-300">
-                <h1>Add Product</h1>
-                <form className='py-4 my-4' onSubmit={handleAddProduct} >
+                <h1>Edit Product</h1>
+                <form className='py-4 my-4'>
                     <input className='my-4'
                         type="text"
                         name="name"
@@ -115,11 +111,8 @@ const page = () => {
                         style={{ color: 'blue' }} // Set the text color to blue
                     />
                     <br />
-                    <button className='bg-green-900 px-8 py-2 rounded' type="submit">Add Product</button>
+                    <button className='bg-blue-900 px-8 py-2 my-2 rounded' type="button" onClick={handleUpdateProduct}>Update User</button>
                     <br />
-                    <button className='bg-blue-900 px-8 py-2 my-2 rounded' type="button" onClick={handlePutApiCall}>Update User</button>
-                    <br />
-                    <button className='bg-red-700 px-8 py-2 my-2 rounded' type="button" onClick={handleDeleteApiCall}>Delete User</button>
                 </form>
             </div>
         </>

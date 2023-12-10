@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import Link from 'next/link';
 
 const page = () => {
     const [products, setProducts] = useState([]);
@@ -29,6 +30,9 @@ const page = () => {
                             <p className="text-lg">Company: {product.company}</p>
                             <p className="text-lg">Color: {product.color}</p>
                             <p className="text-lg">Category: {product.category}</p>
+                            <Link href={`/pages/${product._id}`} >
+                                <button className="btn bg-green-300">Update Product</button>
+                            </Link>
                         </li>
                     ))}
                 </ul>

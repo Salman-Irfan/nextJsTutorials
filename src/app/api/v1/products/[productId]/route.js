@@ -72,3 +72,34 @@ export async function DELETE(request, content) {
         });
     }
 }
+
+// get product by id
+// put request
+export async function GET(request, content) {
+    const productId = content.params.productId;
+    try {
+        await connectToMongodb();
+        // Find the document by ID first
+        const existingProduct = await Product.findById(productId);
+        // If the document is not found, return an error response
+        if (!existingProduct) {
+            return NextResponse.json({
+                success: false,
+                error: "Product not found with the specified ID"
+            });
+        }
+        // Document found, proceed with the update
+        const productById = await Product.findById(productId);
+
+        return NextResponse.json({
+            success: true,
+            data: productById
+        });
+    } catch (error) {
+        console.error(error.message);
+        return NextResponse.json({
+            success: false,
+            error: error.message
+        });
+    }
+}
