@@ -18,6 +18,22 @@ const page = () => {
 
         fetchData();
     }, []);
+    const handleDeleteProduct = async (productId) => {
+        try {
+            const response = await axios.delete(`http://localhost:3000/api/v1/products/${productId}`);
+            if (response.data.success) {
+                // Update local state after successful delete
+                setProducts((prevProducts) =>
+                    prevProducts.filter((product) => product._id !== productId)
+                );
+                alert('Product deleted successfully');
+            } else {
+                alert('Failed to delete product');
+            }
+        } catch (error) {
+            console.error('Error deleting product:', error);
+        }
+    };
     return (
         <>
             <div className="container mx-auto">
@@ -33,6 +49,9 @@ const page = () => {
                             <Link href={`/pages/${product._id}`} >
                                 <button className="btn bg-green-300">Update Product</button>
                             </Link>
+                            {/* integrate delete */}
+                            <button className="btn green-300" onClick={() => handleDeleteProduct(product._id)} >Delete Product</button>
+
                         </li>
                     ))}
                 </ul>
