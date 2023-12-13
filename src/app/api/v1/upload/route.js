@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import {writeFile} from 'fs/promises'
+import connectToMongodb from "@/config/mongoDb";
+import FileModel from "@/models/FileModel";
 
 export async function POST(request, content) {
     try {
@@ -21,12 +23,14 @@ export async function POST(request, content) {
         const newFileName = `userProfile_${file.name}_${currentDate}.${fileExtension}`;
         const path = `public/userProfiles/${newFileName}`
         // now also save the path to the mongo db
-        // and also make a mongo db schema for this 
+        await connectToMongodb();
+        const fileDoc = new FileModel({ path: `userProfiles/${newFileName}` }); // Exclude 'public/' from the path
+        const savedFileDoc = await fileDoc.save();
         // save it in public folder
         const saved = await writeFile(path, buffer)
         return NextResponse.json({
             message: 'file upload api called',
-            data: saved
+            data: savedFileDoc
         })
     } catch (error) {
         console.error("Error parsing JSON:", error);
