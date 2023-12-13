@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 
 export async function POST(request, content) {
+    // req, res = node, req, body
+    // req, => req.json()
+    // next content.params.id,
+    // node id = req.params.id
+
     try {
         // Extract JSON data from the request body
         let payload = await request.json();
