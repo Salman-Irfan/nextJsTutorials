@@ -19,8 +19,9 @@ export async function POST(request, content) {
         // define path to which we want to store the file
         // Extract file extension from the original filename
         const fileExtension = file.name.split('.').pop();
+        const fileName = file.name.split('.')[0];
         const currentDate = Date.now()
-        const newFileName = `userProfile_${file.name}_${currentDate}.${fileExtension}`;
+        const newFileName = `userProfile_${fileName}_${currentDate}.${fileExtension}`;
         const path = `public/userProfiles/${newFileName}`
         // now also save the path to the mongo db
         await connectToMongodb();

@@ -1,4 +1,5 @@
 "use client"
+import axios from 'axios'
 import React, { useState } from 'react'
 
 const page = () => {
@@ -7,9 +8,12 @@ const page = () => {
         console.dir(e.target)
         setFile(e.target.files?.[0])
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        alert('Submit')
+        const formData = new FormData()
+        formData.set('file', file)
+        const response = await axios.post(`http://localhost:3000/api/v1/upload`, formData)
+        console.log(response)
     };
     return (
         <>
