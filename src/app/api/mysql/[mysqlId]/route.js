@@ -35,3 +35,35 @@ export async function PUT(request, content) {
         });
     }
 }
+
+// make delete api here
+export async function DELETE(request, content) {
+    const mysqlId = content.params.mysqlId;
+
+    try {
+        const connection = await pool.getConnection();
+        const [result] = await connection.query(
+            'DELETE FROM about_us WHERE id = ?',
+            [mysqlId]
+        );
+        connection.release();
+
+        if (result.affectedRows === 0) {
+            return NextResponse.json({
+                success: false,
+                message: `No record found with ID ${mysqlId}`,
+            });
+        }
+
+        return NextResponse.json({
+            success: true,
+            message: `Data deleted successfully`,
+        });
+    } catch (error) {
+        console.error('Error deleting data:', error.message);
+        return NextResponse.json({
+            success: false,
+            message: error.message,
+        });
+    }
+}
